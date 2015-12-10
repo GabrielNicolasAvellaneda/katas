@@ -34,11 +34,9 @@ def decode_morse_char(coded_char):
     return MORSE_CODE_TABLE[coded_char]
 
 def abstract_decode(coded_string, separator_str, translator, join_str):
-    output = []
-    for c in coded_string.split(separator_str):
-        translated = translator(c)
-        output.append(translated)
-    return string.join(output, join_str)
+    parts = coded_string.split(separator_str)
+    translated = map(translator, parts)
+    return string.join(translated, join_str)
 
 def decode_morse_word(morse_word):
     return abstract_decode(morse_word, " ", decode_morse_char, "")
