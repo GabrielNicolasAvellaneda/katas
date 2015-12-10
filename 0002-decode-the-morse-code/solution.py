@@ -1,7 +1,8 @@
 import unittest
 import string
 
-def decode_char(coded_char):
+""" https://en.wikipedia.org/wiki/Morse_code """
+def decode_morse_char(coded_char):
     MORSE_CODE_TABLE = {
         ".-"    : "A",
         "-..."  : "B",
@@ -32,22 +33,18 @@ def decode_char(coded_char):
         }
     return MORSE_CODE_TABLE[coded_char]
 
-def decode_morse_word(morse_word):
+def abstract_decode(coded_string, separator_str, translator, join_str):
     output = []
-    char_separator = " "
-    for c in morse_word.split(char_separator):
-        char = decode_char(c)
-        output.append(char)
-    return string.join(output, "")
+    for c in coded_string.split(separator_str):
+        translated = translator(c)
+        output.append(translated)
+    return string.join(output, join_str)
 
-""" https://en.wikipedia.org/wiki/Morse_code """
+def decode_morse_word(morse_word):
+    return abstract_decode(morse_word, " ", decode_morse_char, "")
+
 def decode_morse(morse_code):
-    output = []
-    word_separator = "   "
-    for w in morse_code.split(word_separator):
-        decoded_word = decode_morse_word(w)
-        output.append(decoded_word)
-    return string.join(output, " ") 
+    return abstract_decode(morse_code, "   ", decode_morse_word, " ")
 
 class DecodeMorseCodeTest(unittest.TestCase):
 
