@@ -13,6 +13,9 @@ def mergedstringchecker(str, part1, part2):
     if parts_does_not_sum_up_to_string_size(str, part1, part2):
         return False
 
+    return mergedstringchecker2(str, part1, part2)
+
+def mergedstringchecker2(str, part1, part2):
     if are_all_empty(str, part1, part2):
         return True
 
@@ -20,6 +23,7 @@ def mergedstringchecker(str, part1, part2):
         return False
 
     return True
+
    
 class MergedStringCheckerTest(unittest.TestCase):
 
