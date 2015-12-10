@@ -22,8 +22,15 @@ def mergedstringchecker2(str, part1, part2):
     if string_empty_and_parts_non_empty(str, part1, part2):
         return False
 
-    return True
+    target_char = str[0]
+    target_substring = str[1:]
 
+    if len(part1) > 0 and target_char == part1[0]:
+        return mergedstringchecker2(target_substring, part1[1:], part2)
+    elif len(part2) > 0 and target_char == part2[0]:
+        return mergedstringchecker2(target_substring, part1, part2[1:])
+        
+    return False
    
 class MergedStringCheckerTest(unittest.TestCase):
 
@@ -46,6 +53,15 @@ class MergedStringCheckerTest(unittest.TestCase):
         result = mergedstringchecker("a","abc", "b")
         self.assertFalse(result)
 
+    def test_with_string_and_part_equals(self):
+        result = mergedstringchecker("a", "a", "")
+        self.assertTrue(result)
+        result = mergedstringchecker("some string", "", "some string")
+        self.assertTrue(result)
+
+    def test_with_string_and_parts_not_matching(self):
+        result = mergedstringchecker("x", "y", "z")
+        self.assertFalse(result)
 
 if __name__ == "__main__":
     unittest.main()
