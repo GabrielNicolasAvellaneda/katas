@@ -4,6 +4,7 @@ import string
 """ https://en.wikipedia.org/wiki/Morse_code """
 def decode_morse_char(coded_char):
     MORSE_CODE_TABLE = {
+        # letters
         ".-"    : "A",
         "-..."  : "B",
         "-.-."  : "C",
@@ -13,7 +14,7 @@ def decode_morse_char(coded_char):
         "--."   : "G",
         "...."  : "H",
         ".."    : "I",
-        ".----" : "J",
+        ".---" : "J",
         "-.-"   : "K",
         ".-.."  : "L",
         "--"    : "M",
@@ -30,6 +31,7 @@ def decode_morse_char(coded_char):
         "-..-"   : "X",
         "-.--"  : "Y",
         "--.."  : "Z",
+        # numbers
         ".----" : "1",
         "..---" : "2",
         "...--" : "3",
@@ -39,7 +41,29 @@ def decode_morse_char(coded_char):
         "--..." : "7",
         "---.." : "8",
         "----." : "9",
-        "-----" : "0"
+        "-----" : "0",
+
+        # puntuation
+        ".-.-.-" : ".",
+        "--..--" : ",",
+        "..--.." : "?",
+        ".----." : "'",
+        "-.-.--" : "!",
+        "-..-."  : "/",
+        "-.--."  : "(",
+        "-.--.-" : ")",
+        ".-..."  : "&",
+        "----..." : ":",
+        "-.-.-." : ";",
+        "-...-"   : "=",
+        "-....-"  : "-",
+        "..--.-"  : "_",
+        ".-..-."  : "\"",
+        "...-..-" : "$",
+        ".--.-"   : "@",
+
+        # service codes
+        "...---..." : "SOS",
         }
     return MORSE_CODE_TABLE[coded_char]
 
@@ -52,7 +76,7 @@ def decode_morse_word(morse_word):
     return abstract_decode(morse_word, " ", decode_morse_char, "")
 
 def decode_morse(morse_code):
-    return abstract_decode(morse_code, "   ", decode_morse_word, " ")
+    return abstract_decode(morse_code.strip(), "   ", decode_morse_word, " ")
 
 class DecodeMorseCodeTest(unittest.TestCase):
 
