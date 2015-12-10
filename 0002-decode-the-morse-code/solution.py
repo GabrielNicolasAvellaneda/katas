@@ -29,7 +29,17 @@ def decode_morse_char(coded_char):
         ".--"   : "W",
         "-..-"   : "X",
         "-.--"  : "Y",
-        "--.."  : "Z"
+        "--.."  : "Z",
+        ".----" : "1",
+        "..---" : "2",
+        "...--" : "3",
+        "....-" : "4",
+        "....." : "5",
+        "-...." : "6",
+        "--..." : "7",
+        "---.." : "8",
+        "----." : "9",
+        "-----" : "0"
         }
     return MORSE_CODE_TABLE[coded_char]
 
@@ -61,6 +71,10 @@ class DecodeMorseCodeTest(unittest.TestCase):
     def test_morse_code_decoding_multiple_words(self):
         result = decode_morse(".... . -.--   -.. ..- -.. .")
         self.assertEqual("HEY DUDE", result) 
+
+    def test_morse_code_decoding_numbers(self):
+        result = decode_morse(".---- ..--- ...-- ....- ..... -.... --... ---.. ----. -----")
+        self.assertEqual("1234567890", result)
 
 if __name__ == "__main__":
     unittest.main()
