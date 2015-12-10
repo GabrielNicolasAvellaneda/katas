@@ -25,6 +25,10 @@ def mergedstringchecker2(str, part1, part2):
     target_char = str[0]
     target_substring = str[1:]
 
+    if len(part1) > 0 and len(part2) > 0 and part1[0] == target_char and part2[0] == target_char:
+        # This is the special case
+        return mergedstringchecker2(target_substring, part1[1:], part2) or mergedstringchecker2(target_substring, part1, part2[1:])
+
     if len(part1) > 0 and target_char == part1[0]:
         return mergedstringchecker2(target_substring, part1[1:], part2)
     elif len(part2) > 0 and target_char == part2[0]:
@@ -62,6 +66,10 @@ class MergedStringCheckerTest(unittest.TestCase):
     def test_with_string_and_parts_not_matching(self):
         result = mergedstringchecker("x", "y", "z")
         self.assertFalse(result)
+
+    def test_with_parts_with_ambiguous_characters(self):
+        result = mergedstringchecker("oaob","ob", "oa")
+        self.assertTrue(result)
 
 if __name__ == "__main__":
     unittest.main()
