@@ -42,6 +42,10 @@ class MergedStringCheckerTest(unittest.TestCase):
         result = mergedstringchecker("abc", "a", "b")
         self.assertFalse(result)
 
+    def test_with_string_smaller_than_sum_of_parts(self):
+        result = mergedstringchecker("a","abc", "b")
+        self.assertFalse(result)
+
 
 if __name__ == "__main__":
     unittest.main()
