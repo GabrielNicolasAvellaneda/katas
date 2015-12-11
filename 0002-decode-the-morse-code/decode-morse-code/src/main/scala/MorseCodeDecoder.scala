@@ -15,16 +15,23 @@ object MorseCodeDecoder {
   }
 
   def navigateByMorseChar(node: TreeNode, morseChar:Char) = morseChar match {
-          case '.' => node.left
-          case '-' => node.right
+    case '.' => node.left
+    case '-' => node.right
   }
 
   def decode(morseCode: String) : String = {
-    val root = TreeNode('\0', Some(TreeNode('E', None, None)), Some(TreeNode('T', None, None)))
-
-    val char = morseCode(0)
-    val nextSeq = morseCode.substring(1)
-    val node = navigateByMorseChar(root, char)
-    node.get.value.toString
+    val root = TreeNode('\0', Some(TreeNode('E', None, Some(TreeNode('A', None, None)))), Some(TreeNode('T', None, None)))
+    decodeChar(root, morseCode)
   }
+
+  def decodeChar(node:TreeNode, morseCode:String) : String = {
+    if (morseCode.isEmpty) {
+      node.value.toString
+    }
+    else {
+      val char = morseCode(0)
+      val branch = navigateByMorseChar(node, char).get
+      decodeChar(branch, morseCode.substring(1))
+    }
+ }
 }
