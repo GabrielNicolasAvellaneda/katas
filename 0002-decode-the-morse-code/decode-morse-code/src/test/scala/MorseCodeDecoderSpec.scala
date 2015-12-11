@@ -9,5 +9,6 @@ class MorseCodeDecoderSpec extends FlatSpec with Matchers {
   "MorseCodeDecoder" should "decode a single character" in {
 
     MorseCodeDecoder.decode(".") should === ("E")
+    MorseCodeDecoder.decode("-") should === ("T")
   }
 }
