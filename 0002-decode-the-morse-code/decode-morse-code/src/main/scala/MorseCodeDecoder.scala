@@ -5,21 +5,26 @@ package com.kata
 
 object MorseCodeDecoder {
 
-  case class MorseTranslationTableNode (Value: String, left: Option[MorseTranslationTableNode], right: Option[MorseTranslationTableNode])
+  sealed trait Tree[A] {
+    def value: A
+    def left: Option[Tree[A]]
+    def right: Option[Tree[A]]
+  }
 
-  case class MorseTranslationTableRoot (left: MorseTranslationTableNode, right: MorseTranslationTableNode)
+  case class TreeNode (value:Char, left: Option[TreeNode], right: Option[TreeNode]) extends Tree[Char] {
+  }
+
+  def navigateByMorseChar(node: TreeNode, morseChar:Char) = morseChar match {
+          case '.' => node.left
+          case '-' => node.right
+  }
 
   def decode(morseCode: String) : String = {
+    val root = TreeNode('\0', Some(TreeNode('E', None, None)), Some(TreeNode('T', None, None)))
 
-
-    val translationTree = MorseTranslationTableRoot(left = MorseTranslationTableNode("E", None, None), right = MorseTranslationTableNode("T", None, None))
     val char = morseCode(0)
     val nextSeq = morseCode.substring(1)
-    val node = char match {
-      case '.' => translationTree.left
-      case '-' => translationTree.right
-    }
-
-    node.Value
+    val node = navigateByMorseChar(root, char)
+    node.get.value.toString
   }
 }
