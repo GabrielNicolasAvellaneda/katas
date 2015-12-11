@@ -17,4 +17,9 @@ class MorseCodeDecoderSpec extends FlatSpec with Matchers {
     MorseCodeDecoder.decode(".- .- -") should === ("AAT")
   }
 
+  "MorseCodeDecoder" should "decode complete phrases" in {
+    MorseCodeDecoder.decode(".- -   . -") should === ("AT ET")
+
+  }
+
 }

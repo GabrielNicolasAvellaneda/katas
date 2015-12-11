@@ -23,7 +23,13 @@ object MorseCodeDecoder {
     val root = TreeNode('\0', Some(TreeNode('E', None, Some(TreeNode('A', None, None)))), Some(TreeNode('T', None, None)))
     var (result, morseCodeRest) = decodeChar(root, morseCode)
     while (!morseCodeRest.isEmpty) {
-      val (moreDecoded, rest) = decodeChar(root, morseCodeRest.substring(1))
+      if (morseCodeRest.startsWith("   ")) {
+        morseCodeRest = morseCodeRest.substring(3)
+        result = result + " "
+      } else {
+        morseCodeRest = morseCodeRest.substring(1)
+      }
+      val (moreDecoded, rest) = decodeChar(root, morseCodeRest)
       result = result + moreDecoded
       morseCodeRest = rest
     }
