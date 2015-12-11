@@ -6,10 +6,15 @@ import org.scalatest.{Matchers, FlatSpec}
  */
 class MorseCodeDecoderSpec extends FlatSpec with Matchers {
 
-  "MorseCodeDecoder" should "decode a single character" in {
-
+  "MorseCodeDecoder" should "decode a single characters" in {
     MorseCodeDecoder.decode(".") should === ("E")
     MorseCodeDecoder.decode("-") should === ("T")
     MorseCodeDecoder.decode(".-") should === ("A")
   }
+
+  "MorseCodeDecoder" should "decode words" in {
+    MorseCodeDecoder.decode(".- .") should === ("AE")
+    MorseCodeDecoder.decode(".- .- -") should === ("AAT")
+  }
+
 }

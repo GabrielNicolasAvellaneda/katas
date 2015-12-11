@@ -21,12 +21,18 @@ object MorseCodeDecoder {
 
   def decode(morseCode: String) : String = {
     val root = TreeNode('\0', Some(TreeNode('E', None, Some(TreeNode('A', None, None)))), Some(TreeNode('T', None, None)))
-    decodeChar(root, morseCode)
+    var (result, morseCodeRest) = decodeChar(root, morseCode)
+    while (!morseCodeRest.isEmpty) {
+      val (moreDecoded, rest) = decodeChar(root, morseCodeRest.substring(1))
+      result = result + moreDecoded
+      morseCodeRest = rest
+    }
+    result
   }
 
-  def decodeChar(node:TreeNode, morseCode:String) : String = {
-    if (morseCode.isEmpty) {
-      node.value.toString
+  def decodeChar(node:TreeNode, morseCode:String) : (String, String) = {
+    if (morseCode.isEmpty || morseCode(0) == ' ') {
+      (node.value.toString, morseCode)
     }
     else {
       val char = morseCode(0)
