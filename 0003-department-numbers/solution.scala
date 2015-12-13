@@ -2,7 +2,9 @@
 object Solution {
 
 	def main(args: Array[String]) {
-		departmentNumbers()
+		for (x <- departmentNumbers()) {
+			println(x)
+		}
 	}
 
 	def areDifferent(x:Int, y:Int, z:Int) : Boolean = {
@@ -17,16 +19,22 @@ object Solution {
 		(x + y + z) == 12
 	}
 
-	def departmentNumbers() = {
-		for (x <- 1 to 7) {
-			for (y <- 1 to 7) {
+	def permutations(from:Int, to:Int) = {
+		var result = List[Tuple3[Int, Int, Int]]()
+		for (x <- from to to) {
+			for (y <- from to to) {
 				for (z <- 1 to 7) {
-					if (areDifferent(x, y, z) && isEven(z) && sumTo12(x, y, z))
-						println(s"$x, $y, $z")
+					result = (x, y, z) :: result
 				}
 			}
 		}
+		result
+
 	}
 
+	def departmentNumbers() = {
+		val tuples = permutations(1, 7)
+		tuples.filter((t:Tuple3[Int, Int, Int]) => areDifferent(t._1, t._2, t._3) && isEven(t._3) && sumTo12(t._1, t._2, t._3))
+	}
 
 }
